@@ -1,0 +1,2 @@
+type = 'rs-go'
+main = "gamemode/gamemode.dll"
