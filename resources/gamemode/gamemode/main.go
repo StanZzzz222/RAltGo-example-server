@@ -52,7 +52,7 @@ func onPlayerConnect(player *models.IPlayer) {
 		logger.LogInfof("Create vehicle %v | model: %v", veh.GetId(), veh.GetModel())
 		// TODO Resolve the issue of code being too fast to find the car
 		time.AfterFunc(time.Millisecond*100, func() {
-			veh.SetHeadLightColor(5)
+			veh.SetHeadLightColor(8)
 			player.SetIntoVehicle(veh, 1)
 		})
 	})
