@@ -50,12 +50,15 @@ func onPlayerConnect(player *models.IPlayer) {
 	time.AfterFunc(time.Second*8, func() {
 		veh := vehicle.CreateVehicleByHash(vehicleModelHash.T20, "RALTGO", utils.NewVector3(-1069.3187, -2928.9758, 14.1318), utils.NewVector3(0, 0, 0), 1, 1)
 		logger.LogInfof("Create vehicle %v | model: %v", veh.GetId(), veh.GetModel())
-		veh.SetHeadLightColor(2)
-		player.SetIntoVehicle(veh, 0)
+		// TODO Resolve the issue of code being too fast to find the car
+		time.AfterFunc(time.Millisecond*100, func() {
+			veh.SetHeadLightColor(5)
+			player.SetIntoVehicle(veh, 1)
+		})
 	})
 }
 
 func onEnterVehicle(player *models.IPlayer, vehicle *models.IVehicle, seat uint8) {
 	logger.LogInfof("Player %v enter vehicle: %v", player.GetName(), vehicle.GetModel())
-	vehicle.SetPrimaryColor(3)
+	vehicle.SetPrimaryColor(5)
 }
