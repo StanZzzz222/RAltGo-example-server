@@ -1,17 +1,17 @@
 package main
 
 import (
-	"github.com/StanZzzz222/RAltGo/alt_events"
+	"github.com/StanZzzz222/RAltGo/common/alt/alt_events"
+	"github.com/StanZzzz222/RAltGo/common/alt/blip"
+	"github.com/StanZzzz222/RAltGo/common/alt/scheduler"
+	"github.com/StanZzzz222/RAltGo/common/alt/timers"
+	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/common/utils"
 	"github.com/StanZzzz222/RAltGo/enums/ped"
 	vehicleModelHash "github.com/StanZzzz222/RAltGo/enums/vehicle"
 	"github.com/StanZzzz222/RAltGo/logger"
 	"github.com/StanZzzz222/RAltGo/modules"
-	"github.com/StanZzzz222/RAltGo/scheduler"
-	"github.com/StanZzzz222/RAltGo/timers"
-	"github.com/StanZzzz222/RAltGo/vehicle"
-	"sync"
 	"time"
 )
 
@@ -28,26 +28,16 @@ func init() {
 	alt_events.OnStop(onStop)
 	alt_events.OnPlayerConnect(onPlayerConnect)
 	alt_events.OnEnterVehicle(onEnterVehicle)
-	alt_events.OnLeaveVehicle(func(player *models.IPlayer, vehicle *models.IVehicle, seat uint8) {
-		logger.LogInfof("Player %v leave vehicle: %v", player.GetName(), vehicle.GetModel())
-		s := scheduler.NewScheduler()
-		wg := &sync.WaitGroup{}
-		go func() {
-			wg.Add(1)
-			s.AddTask(func() {
-				vehicle.SetPrimaryColor(1)
-				vehicle.SetNeonActive(false)
-				wg.Done()
-			})
-		}()
-		wg.Wait()
-		s.RunWait()
-		logger.LogInfof("Done")
-	})
+	alt_events.OnLeaveVehicle(onLeaveVehicle)
 }
 
 func onStart() {
 	logger.LogInfo("Server start")
+	b := blip.CreateBlipPoint(12, 1, "测试", utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
+	timers.SetTimeout(time.Second*3, func() {
+		b.SetBlipFlashInterval(3)
+		b.SetBlipFlashes(true)
+	})
 }
 
 func onStop() {
@@ -75,4 +65,15 @@ func onEnterVehicle(player *models.IPlayer, vehicle *models.IVehicle, seat uint8
 	logger.LogInfof("Player %v enter vehicle: %v", player.GetName(), vehicle.GetModel())
 	vehicle.SetPrimaryColor(5)
 	vehicle.SetNeonActive(true)
+}
+
+func onLeaveVehicle(player *models.IPlayer, vehicle *models.IVehicle, seat uint8) {
+	logger.LogInfof("Player %v leave vehicle: %v", player.GetName(), vehicle.GetModel())
+	s := scheduler.NewScheduler()
+	s.AddTask(func() {
+		vehicle.SetPrimaryColor(1)
+		vehicle.SetNeonActive(false)
+	})
+	go s.Run()
+	logger.LogInfof("Continue running, task send to ontick scheduler")
 }
