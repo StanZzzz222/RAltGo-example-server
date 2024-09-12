@@ -36,6 +36,7 @@ func init() {
 			wg.Add(1)
 			s.AddTask(func() {
 				vehicle.SetPrimaryColor(1)
+				vehicle.SetNeonActive(false)
 				wg.Done()
 			})
 		}()
@@ -64,7 +65,8 @@ func onPlayerConnect(player *models.IPlayer) {
 	timers.SetTimeout(time.Second*8, func() {
 		veh := vehicle.CreateVehicleByHash(vehicleModelHash.T20, "RALTGO", utils.NewVector3(-1069.3187, -2928.9758, 14.1318), utils.NewVector3(0, 0, 0), 1, 1)
 		logger.LogInfof("Create vehicle %v | model: %v", veh.GetId(), veh.GetModel())
-		veh.SetHeadLightColor(8)
+		veh.SetNeonColor(utils.NewRGBA(123, 104, 238, 255))
+		veh.SetNeonActive(false)
 		player.SetIntoVehicle(veh, 1)
 	})
 }
@@ -72,4 +74,5 @@ func onPlayerConnect(player *models.IPlayer) {
 func onEnterVehicle(player *models.IPlayer, vehicle *models.IVehicle, seat uint8) {
 	logger.LogInfof("Player %v enter vehicle: %v", player.GetName(), vehicle.GetModel())
 	vehicle.SetPrimaryColor(5)
+	vehicle.SetNeonActive(true)
 }
