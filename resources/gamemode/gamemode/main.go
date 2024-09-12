@@ -8,7 +8,10 @@ import (
 	vehicleModelHash "github.com/StanZzzz222/RAltGo/enums/vehicle"
 	"github.com/StanZzzz222/RAltGo/logger"
 	"github.com/StanZzzz222/RAltGo/modules"
+	"github.com/StanZzzz222/RAltGo/scheduler"
+	"github.com/StanZzzz222/RAltGo/timers"
 	"github.com/StanZzzz222/RAltGo/vehicle"
+	"sync"
 	"time"
 )
 
@@ -27,7 +30,18 @@ func init() {
 	alt_events.OnEnterVehicle(onEnterVehicle)
 	alt_events.OnLeaveVehicle(func(player *models.IPlayer, vehicle *models.IVehicle, seat uint8) {
 		logger.LogInfof("Player %v leave vehicle: %v", player.GetName(), vehicle.GetModel())
-		vehicle.SetPrimaryColor(1)
+		s := scheduler.NewScheduler()
+		wg := &sync.WaitGroup{}
+		go func() {
+			wg.Add(1)
+			s.AddTask(func() {
+				vehicle.SetPrimaryColor(1)
+				wg.Done()
+			})
+		}()
+		wg.Wait()
+		s.RunWait()
+		logger.LogInfof("Done")
 	})
 }
 
@@ -42,19 +56,16 @@ func onStop() {
 func onPlayerConnect(player *models.IPlayer) {
 	logger.LogInfof("Player %v(%v) connected, IP: %v", player.GetName(), player.GetId(), player.GetIP())
 	player.Spawn("mp_m_freemode_01", utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
-	time.AfterFunc(time.Second*5, func() {
+	timers.SetTimeout(time.Second*5, func() {
 		player.SetPedModelByHash(ped.Ammucity01SMY)
 		player.SetDateTimeUTC8(time.Now())
 		logger.LogInfof("Change player %v model", player.GetName())
 	})
-	time.AfterFunc(time.Second*8, func() {
+	timers.SetTimeout(time.Second*8, func() {
 		veh := vehicle.CreateVehicleByHash(vehicleModelHash.T20, "RALTGO", utils.NewVector3(-1069.3187, -2928.9758, 14.1318), utils.NewVector3(0, 0, 0), 1, 1)
 		logger.LogInfof("Create vehicle %v | model: %v", veh.GetId(), veh.GetModel())
-		// TODO Resolve the issue of code being too fast to find the car
-		time.AfterFunc(time.Millisecond*100, func() {
-			veh.SetHeadLightColor(8)
-			player.SetIntoVehicle(veh, 1)
-		})
+		veh.SetHeadLightColor(8)
+		player.SetIntoVehicle(veh, 1)
 	})
 }
 
