@@ -48,6 +48,7 @@ func init() {
 
 func onStart() {
 	logger.LogInfo("Server start")
+	blip :=
 }
 
 func onStop() {
