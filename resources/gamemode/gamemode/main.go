@@ -33,7 +33,7 @@ func init() {
 
 func onStart() {
 	logger.LogInfo("Server start")
-	b := blip.CreateBlipPoint(12, 1, "测试", utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
+	b := blip.CreateBlipPoint(12, 1, "test", utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
 	timers.SetTimeout(time.Second*3, func() {
 		b.SetBlipFlashInterval(3)
 		b.SetBlipFlashes(true)
