@@ -2,7 +2,7 @@ module gamemode
 
 go 1.22
 
-require github.com/StanZzzz222/RAltGo v0.0.0-20240913084404-39a8442a8cd9
+require github.com/StanZzzz222/RAltGo v0.0.0-20240913093324-0117ddf7480a
 
 require (
 	github.com/gookit/color v1.5.4 // indirect
