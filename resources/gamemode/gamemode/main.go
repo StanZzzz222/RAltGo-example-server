@@ -46,9 +46,9 @@ func onStop() {
 
 func onPlayerConnect(player *models.IPlayer) {
 	logger.LogInfof("Player %v(%v) connected, IP: %v", player.GetName(), player.GetId(), player.GetIP())
-	player.Spawn("mp_m_freemode_01", utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
+	player.Spawn(ped.FreemodeMale01, utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
 	timers.SetTimeout(time.Second*5, func() {
-		player.SetPedModelByHash(ped.Ammucity01SMY)
+		player.SetPedModel(ped.Ammucity01SMY)
 		player.SetDateTimeUTC8(time.Now())
 		logger.LogInfof("Change player %v model", player.GetName())
 	})
@@ -74,6 +74,6 @@ func onLeaveVehicle(player *models.IPlayer, vehicle *models.IVehicle, seat uint8
 		vehicle.SetPrimaryColor(1)
 		vehicle.SetNeonActive(false)
 	})
-	go s.Run()
+	s.Run()
 	logger.LogInfof("Continue running, task send to ontick scheduler")
 }
