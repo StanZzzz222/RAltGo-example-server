@@ -27,11 +27,11 @@ import (
 func main() {}
 func init() {
 	modules.InitMounted()
-	alt_events.OnStart(onStart)
-	alt_events.OnStop(onStop)
-	alt_events.OnPlayerConnect(onPlayerConnect)
-	alt_events.OnEnterVehicle(onEnterVehicle)
-	alt_events.OnLeaveVehicle(onLeaveVehicle)
+	alt_events.Events().OnStart(onStart)
+	alt_events.Events().OnStop(onStop)
+	alt_events.Events().OnPlayerConnect(onPlayerConnect)
+	alt_events.Events().OnEnterVehicle(onEnterVehicle)
+	alt_events.Events().OnLeaveVehicle(onLeaveVehicle)
 }
 
 /*
