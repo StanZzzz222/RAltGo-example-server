@@ -1,6 +1,8 @@
 package events
 
-import "github.com/StanZzzz222/RAltGo/logger"
+import (
+	"github.com/StanZzzz222/RAltGo/logger"
+)
 
 /*
    Create by zyx

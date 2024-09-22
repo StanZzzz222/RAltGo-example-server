@@ -2,7 +2,7 @@ module gamemode
 
 go 1.22
 
-require github.com/StanZzzz222/RAltGo v0.0.0-20240922134603-d6130a80c31a
+require github.com/StanZzzz222/RAltGo v0.0.0-20240922135711-5d8332368999
 
 require (
 	github.com/goccy/go-json v0.10.3 // indirect
