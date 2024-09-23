@@ -6,6 +6,7 @@ import (
 	"github.com/StanZzzz222/RAltGo/common/alt/command"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/common/utils"
+	"time"
 )
 
 /*
@@ -20,14 +21,14 @@ func InitPublicCommands() {
 	{
 		group.OnCommand("getpos", GetPos, false)
 		group.OnCommandDesc("hello", Hello, false, "/hello [name] [age]")
-		group.OnCommandDesc("emitbenchmark", EmitBenchmark, false, "/emitbenchmark [count]")
-		group.OnCommandDesc("emitbenchmarkobjs", EmitBenchmarkObjects, false, "/emitbenchmarkobjs [count]")
+		group.OnCommandDesc("emitbenchmark", EmitBenchmark, false, "/emitbenchmark [emit count] [user count]")
+		group.OnCommandDesc("emitbenchmarkmap", EmitBenchmarkMaps, false, "/emitbenchmarkmap [emit count]")
 		group.OnCommandDesc("getadmin", GetAdmin, false, "/getadmin [password]")
 		group.OnCommandDesc("setpos", SetPos, false, "/setpos [Position (example: 0,0,0)]")
 	}
 }
 
-func EmitBenchmark(player *models.IPlayer, count int64) {
+func EmitBenchmark(player *models.IPlayer, emitCount, userCount int64) {
 	type User struct {
 		Id    int      `json:"id"`
 		Name  string   `json:"name"`
@@ -35,7 +36,7 @@ func EmitBenchmark(player *models.IPlayer, count int64) {
 		Likes []string `json:"likes"`
 	}
 	var users []*User
-	for i := 0; i < int(count); i++ {
+	for i := 0; i < int(userCount); i++ {
 		users = append(users, &User{
 			Id:    i + 1,
 			Name:  fmt.Sprintf("User%d", i+1),
@@ -44,13 +45,16 @@ func EmitBenchmark(player *models.IPlayer, count int64) {
 		})
 	}
 	userBytes, _ := json.Marshal(users)
-	for i := 0; i < int(count); i++ {
+	start := time.Now()
+	for i := 0; i < int(emitCount); i++ {
 		player.Emit("emitbenchmark", string(userBytes))
 	}
+	player.SendBroadcastMessage(fmt.Sprintf("Emit benchmark done, EmitCount: %v | UsersCount: %v | Since: %v ms", emitCount, userCount, time.Since(start).Milliseconds()))
 }
 
-func EmitBenchmarkObjects(player *models.IPlayer, count int64) {
-	for i := 0; i < int(count); i++ {
+func EmitBenchmarkMaps(player *models.IPlayer, emitCount int64) {
+	start := time.Now()
+	for i := 0; i < int(emitCount); i++ {
 		player.Emit("emitbenchmark:objects", map[string]any{
 			"id":    i + 1,
 			"name":  fmt.Sprintf("User%d", i+1),
@@ -58,6 +62,7 @@ func EmitBenchmarkObjects(player *models.IPlayer, count int64) {
 			"likes": []string{"Like1", "Like2", "Like3"},
 		})
 	}
+	player.SendBroadcastMessage(fmt.Sprintf("Emit benchmark done, EmitCount: %v  | Since: %v ms", emitCount, time.Since(start).Milliseconds()))
 }
 
 func Hello(player *models.IPlayer, name string, age int64) {
