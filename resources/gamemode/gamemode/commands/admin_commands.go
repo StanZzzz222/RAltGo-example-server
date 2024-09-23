@@ -23,7 +23,7 @@ func InitAdminCommands() {
 			logger.LogInfof("Player: %v use command: %v", player.GetName(), name)
 			return true
 		}
-		player.SendBroadcast("You do not have permission to use this command")
+		player.SendBroadcastMessage("You do not have permission to use this command")
 		return false
 	})
 	// Add OnCommand
@@ -41,16 +41,16 @@ func CreateVehicle(player *models.IPlayer, name string) {
 	veh := vehicle.CreateVehicle(name, "test", player.GetPosition(), player.GetRotation(), 1, 1)
 	player.SetData("veh", veh)
 	player.SetIntoVehicle(veh, uint8(vehicle_hash.Driver))
-	player.SendBroadcast(fmt.Sprintf("Create vehicle: %v | id: %v", veh.GetModel().String(), veh.GetId()))
+	player.SendBroadcastMessage(fmt.Sprintf("Create vehicle: %v | id: %v", veh.GetModel().String(), veh.GetId()))
 }
 
 func SetVehicleColor(player *models.IPlayer, primaryColor, secondColor int64) {
 	if (primaryColor <= 0 || secondColor <= 0) || (primaryColor >= 159 && secondColor >= 159) {
-		player.SendBroadcast(fmt.Sprintf("PrimaryColor or SecondColor range in 1-159"))
+		player.SendBroadcastMessage(fmt.Sprintf("PrimaryColor or SecondColor range in 1-159"))
 		return
 	}
 	if !player.IsInVehicle() {
-		player.SendBroadcast(fmt.Sprintf("You are not currently in any vehicle"))
+		player.SendBroadcastMessage(fmt.Sprintf("You are not currently in any vehicle"))
 		return
 	}
 	veh := player.Vehicle()

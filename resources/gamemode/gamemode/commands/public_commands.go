@@ -65,20 +65,20 @@ func Hello(player *models.IPlayer, name string, age int64) {
 }
 
 func GetPos(player *models.IPlayer) {
-	player.SendBroadcast(fmt.Sprintf("Position: %v | Rotation: %v", player.GetPosition().ToString(), player.GetRotation().ToString()))
+	player.SendBroadcastMessage(fmt.Sprintf("Position: %v | Rotation: %v", player.GetPosition().ToString(), player.GetRotation().ToString()))
 }
 
 func GetAdmin(player *models.IPlayer, password string) {
 	if password == "raltgo" {
 		player.SetData("admin", true)
-		player.SendBroadcast("Take admin success")
+		player.SendBroadcastMessage("Take admin success")
 	}
 }
 
 func SetPos(player *models.IPlayer, posStr string) {
 	pos, err := utils.NewVector3FromStr(posStr)
 	if err != nil {
-		player.SendBroadcast("Set position error, position incorrect format")
+		player.SendBroadcastMessage("Set position error, position incorrect format")
 		return
 	}
 	player.SetPosition(pos)

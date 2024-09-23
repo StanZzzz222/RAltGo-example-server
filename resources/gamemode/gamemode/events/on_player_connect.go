@@ -17,7 +17,7 @@ import (
 
 func OnPlayerConnect(player *models.IPlayer) {
 	logger.LogInfof("Player %v(%v) connected, IP: %v", player.GetName(), player.GetId(), player.GetIP())
-	player.SendBroadcast("Welcome to server")
+	player.SendBroadcastMessage("Welcome to server")
 	player.Spawn(ped_hash.FreemodeMale01, utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
 	timers.SetTimeout(time.Second*3, func() {
 		player.SetPedModel(ped_hash.AnitaCutscene)
