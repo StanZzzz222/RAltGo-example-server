@@ -7,6 +7,7 @@ import (
 	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/common/utils"
+	"github.com/StanZzzz222/RAltGo/hash_enums/radio_station_type"
 	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_hash"
 	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_light_state_type"
 	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_lock_state_type"
@@ -61,7 +62,7 @@ func BaseBenchmark(player *models.IPlayer, t int64, count int64) {
 			veh.SetNeonColor(utils.NewRGBA(uint8(rand.Intn(255)), uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255))
 			veh.SetLightState(vehicle_light_state_type.VehicleLightAlwaysOn)
 			veh.SetDirtLevel(uint8(rand.Intn(6)))
-			veh.SetRadioStation(uint8(rand.Intn(6)))
+			veh.SetRadioStation(radio_station_type.LosSantosRockRadio)
 			veh.SetDashboardColor(uint8(rand.Intn(6)))
 			_ = veh.GetPosition()
 			_ = veh.GetRotation()
