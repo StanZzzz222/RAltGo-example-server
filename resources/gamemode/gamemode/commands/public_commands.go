@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/StanZzzz222/RAltGo/common/alt/command"
+	"github.com/StanZzzz222/RAltGo/common/alt/timers"
 	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/common/utils"
@@ -39,36 +40,39 @@ func BaseBenchmark(player *models.IPlayer, t int64, count int64) {
 	switch t {
 	case 0:
 		// Mock real usage environment
-		// Intel Core i913900H - count: 10000 - Since: 135 ms
-		start := time.Now()
+		// Intel Core i913900H - count: 10000 - Since: 135 ms | Game - Since: 800 ms
 		pos := utils.NewVector3ARound(player.GetPosition().X, player.GetPosition().Y, player.GetPosition().Z, 10)
 		veh := vehicle.CreateVehicleByHash(vehicle_hash.T20, "test", pos, player.GetRotation(), 1, 1)
-		for i := 0; i < int(count); i++ {
-			veh.SetPrimaryColor(uint8(rand.Intn(159)))
-			veh.SetSecondColor(uint8(rand.Intn(159)))
-			if i%2 == 0 {
-				veh.SetEngineOn(true)
-				veh.SetNeonActive(true)
-				veh.SetLockState(vehicle_lock_state_type.VehicleLockLocked)
-				veh.SetDriftMode(true)
-			} else {
-				veh.SetEngineOn(false)
-				veh.SetNeonActive(false)
-				veh.SetLockState(vehicle_lock_state_type.VehicleLockUnlocked)
-				veh.SetDriftMode(true)
+		player.SetIntoVehicle(veh, 1)
+		timers.SetTimeout(time.Second*3, func() {
+			start := time.Now()
+			for i := 0; i < int(count); i++ {
+				veh.SetPrimaryColor(uint8(rand.Intn(159)))
+				veh.SetSecondColor(uint8(rand.Intn(159)))
+				if i%2 == 0 {
+					veh.SetEngineOn(true)
+					veh.SetNeonActive(true)
+					veh.SetLockState(vehicle_lock_state_type.VehicleLockLocked)
+					veh.SetDriftMode(true)
+				} else {
+					veh.SetEngineOn(false)
+					veh.SetNeonActive(false)
+					veh.SetLockState(vehicle_lock_state_type.VehicleLockUnlocked)
+					veh.SetDriftMode(true)
+				}
+				veh.Repair()
+				veh.SetWheelColor(uint8(rand.Intn(10)))
+				veh.SetNeonColor(utils.NewRGBA(uint8(rand.Intn(255)), uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255))
+				veh.SetLightState(vehicle_light_state_type.VehicleLightAlwaysOn)
+				veh.SetDirtLevel(uint8(rand.Intn(6)))
+				veh.SetRadioStation(radio_station_type.LosSantosRockRadio)
+				veh.SetDashboardColor(uint8(rand.Intn(6)))
+				_ = veh.GetPosition()
+				_ = veh.GetRotation()
+				veh.ToggleEngine()
 			}
-			veh.Repair()
-			veh.SetWheelColor(uint8(rand.Intn(10)))
-			veh.SetNeonColor(utils.NewRGBA(uint8(rand.Intn(255)), uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255))
-			veh.SetLightState(vehicle_light_state_type.VehicleLightAlwaysOn)
-			veh.SetDirtLevel(uint8(rand.Intn(6)))
-			veh.SetRadioStation(radio_station_type.LosSantosRockRadio)
-			veh.SetDashboardColor(uint8(rand.Intn(6)))
-			_ = veh.GetPosition()
-			_ = veh.GetRotation()
-			veh.ToggleEngine()
-		}
-		player.SendBroadcastMessage(fmt.Sprintf("Vehicle benchmark, Count: %v | Since: %v ms", count, time.Since(start).Milliseconds()))
+			player.SendBroadcastMessage(fmt.Sprintf("Vehicle benchmark, Count: %v | Since: %v ms", count, time.Since(start).Milliseconds()))
+		})
 	}
 }
 
