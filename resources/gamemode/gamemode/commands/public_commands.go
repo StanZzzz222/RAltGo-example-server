@@ -4,8 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/StanZzzz222/RAltGo/common/alt/command"
+	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/common/utils"
+	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_hash"
+	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_light_state_type"
+	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_lock_state_type"
+	"math/rand"
 	"time"
 )
 
@@ -23,8 +28,42 @@ func InitPublicCommands() {
 		group.OnCommandDesc("hello", Hello, false, "/hello [name] [age]")
 		group.OnCommandDesc("emitbenchmark", EmitBenchmark, false, "/emitbenchmark [emit count] [user count]")
 		group.OnCommandDesc("emitbenchmarkmap", EmitBenchmarkMaps, false, "/emitbenchmarkmap [emit count]")
+		group.OnCommandDesc("basebenchmark", BaseBenchmark, false, "/basebenchmark [type] [count]")
 		group.OnCommandDesc("getadmin", GetAdmin, false, "/getadmin [password]")
 		group.OnCommandDesc("setpos", SetPos, false, "/setpos [Position (example: 0,0,0)]")
+	}
+}
+
+func BaseBenchmark(player *models.IPlayer, t int64, count int64) {
+	switch t {
+	case 0:
+		// Mock real usage environment
+		start := time.Now()
+		pos := utils.NewVector3ARound(player.GetPosition().X, player.GetPosition().Y, player.GetPosition().Z, 10)
+		veh := vehicle.CreateVehicleByHash(vehicle_hash.T20, "test", pos, player.GetRotation(), 1, 1)
+		for i := 0; i < int(count); i++ {
+			veh.SetPrimaryColor(uint8(rand.Intn(159)))
+			veh.SetSecondColor(uint8(rand.Intn(159)))
+			if i%2 == 0 {
+				veh.SetEngineOn(true)
+				veh.SetNeonActive(true)
+				veh.SetLockState(vehicle_lock_state_type.VehicleLockLocked)
+				veh.SetDriftMode(true)
+			} else {
+				veh.SetEngineOn(false)
+				veh.SetNeonActive(false)
+				veh.SetLockState(vehicle_lock_state_type.VehicleLockUnlocked)
+				veh.SetDriftMode(true)
+			}
+			veh.Repair()
+			veh.SetWheelColor(uint8(rand.Intn(10)))
+			veh.SetNeonColor(utils.NewRGBA(uint8(rand.Intn(255)), uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255))
+			veh.SetLightState(vehicle_light_state_type.VehicleLightAlwaysOn)
+			veh.SetDirtLevel(uint8(rand.Intn(6)))
+			veh.SetRadioStation(uint8(rand.Intn(6)))
+			veh.SetDashboardColor(uint8(rand.Intn(6)))
+		}
+		player.SendBroadcastMessage(fmt.Sprintf("Vehicle benchmark, Count: %v | Since: %v ms", count, time.Since(start).Milliseconds()))
 	}
 }
 
