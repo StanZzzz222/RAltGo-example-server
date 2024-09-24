@@ -38,6 +38,7 @@ func BaseBenchmark(player *models.IPlayer, t int64, count int64) {
 	switch t {
 	case 0:
 		// Mock real usage environment
+		// Intel Core i913900H - count: 10000 - Since: 115 ms
 		start := time.Now()
 		pos := utils.NewVector3ARound(player.GetPosition().X, player.GetPosition().Y, player.GetPosition().Z, 10)
 		veh := vehicle.CreateVehicleByHash(vehicle_hash.T20, "test", pos, player.GetRotation(), 1, 1)
