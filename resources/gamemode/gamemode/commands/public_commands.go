@@ -3,9 +3,9 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/StanZzzz222/RAltGo/common/alt/command"
 	"github.com/StanZzzz222/RAltGo/common/alt/timers"
 	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
+	"github.com/StanZzzz222/RAltGo/common/command"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/common/utils"
 	"github.com/StanZzzz222/RAltGo/hash_enums/radio_station_type"
@@ -28,6 +28,7 @@ func InitPublicCommands() {
 	{
 		group.OnCommand("getpos", GetPos, false)
 		group.OnCommandDesc("hello", Hello, false, "/hello [name] [age]")
+		group.OnCommandDesc("sayhi", SayHi, true, "/sayhi [content]")
 		group.OnCommandDesc("emitbenchmark", EmitBenchmark, false, "/emitbenchmark [emit count] [user count]")
 		group.OnCommandDesc("emitbenchmarkmap", EmitBenchmarkMaps, false, "/emitbenchmarkmap [emit count]")
 		group.OnCommandDesc("basebenchmark", BaseBenchmark, false, "/basebenchmark [type] [count]")
@@ -111,6 +112,10 @@ func EmitBenchmarkMaps(player *models.IPlayer, emitCount int64) {
 		})
 	}
 	player.SendBroadcastMessage(fmt.Sprintf("Emit benchmark done, EmitCount: %v  | Since: %v ms", emitCount, time.Since(start).Milliseconds()))
+}
+
+func SayHi(player *models.IPlayer, content string) {
+	player.SendBroadcastMessage(fmt.Sprintf("* Hi %s", content))
 }
 
 func Hello(player *models.IPlayer, name string, age int64) {

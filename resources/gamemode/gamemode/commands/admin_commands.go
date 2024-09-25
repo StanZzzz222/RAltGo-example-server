@@ -2,8 +2,8 @@ package commands
 
 import (
 	"fmt"
-	"github.com/StanZzzz222/RAltGo/common/alt/command"
 	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
+	"github.com/StanZzzz222/RAltGo/common/command"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_hash"
 	"github.com/StanZzzz222/RAltGo/logger"
