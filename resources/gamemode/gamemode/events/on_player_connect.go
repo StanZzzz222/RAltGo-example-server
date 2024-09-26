@@ -21,5 +21,9 @@ func OnPlayerConnect(player *models.IPlayer) {
 	player.Spawn(ped_hash.FreemodeMale01, utils.NewVector3(-1069.3187, -2928.9758, 14.1318))
 	timers.SetTimeout(time.Second*3, func() {
 		player.SetPedModel(ped_hash.AnitaCutscene)
+		player.SetSyncedMetaData("test", "Hello JS")
+		player.SetSyncedMetaData("bool", true)
+		player.SetSyncedMetaData("player", player)
+		player.Emit("test_meta_data")
 	})
 }

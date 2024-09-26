@@ -12,3 +12,13 @@ alt.onServer("emitbenchmark", (...args) => {
 alt.onServer("emitbenchmark:objects", (user) => {
   console.log(`Users Name - ${user.name}`)
 });
+
+alt.onServer("test_meta_data", () => {
+  let player = alt.Player.local
+  let testData = player.getSyncedMeta("test")
+  let boolData = player.getSyncedMeta("bool")
+  let playerData = player.getSyncedMeta("player")
+  console.log(testData)
+  console.log(boolData)
+  console.log(playerData)
+});
