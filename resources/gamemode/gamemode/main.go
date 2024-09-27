@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"gamemode/client_events"
 	"gamemode/commands"
 	"gamemode/events"
 	"github.com/StanZzzz222/RAltGo/common/alt/alt_events"
+	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/modules"
 )
 
@@ -26,6 +28,11 @@ func init() {
 	alt_events.Events().OnEnterVehicle(events.OnPlayerEnterVehicle)
 	alt_events.Events().OnLeaveVehicle(events.OnLeaveVehicle)
 	alt_events.Events().OnChatMessage(events.OnChatMessage)
+	alt_events.Events().OnNetOwnerChange(func(entity any, oldNetOwner *models.IPlayer, newNetOwner *models.IPlayer) {
+		fmt.Println(entity)
+		fmt.Println(oldNetOwner)
+		fmt.Println(newNetOwner)
+	})
 	// Client events
 	client_events.InitUserEvents()
 	// Commands
