@@ -3,11 +3,11 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/StanZzzz222/RAltGo/common"
 	"github.com/StanZzzz222/RAltGo/common/alt/timers"
 	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
 	"github.com/StanZzzz222/RAltGo/common/command"
 	"github.com/StanZzzz222/RAltGo/common/models"
-	"github.com/StanZzzz222/RAltGo/common/utils"
 	"github.com/StanZzzz222/RAltGo/hash_enums/radio_station_type"
 	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_hash"
 	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_light_state_type"
@@ -42,7 +42,7 @@ func BaseBenchmark(player *models.IPlayer, t int64, count int64) {
 	case 0:
 		// Mock real usage environment
 		// Intel Core i913900H - count: 10000 - Since: 135 ms | Game - Since: 800 ms
-		pos := utils.NewVector3ARound(player.GetPosition().X, player.GetPosition().Y, player.GetPosition().Z, 10)
+		pos := common.NewVector3ARound(player.GetPosition().X, player.GetPosition().Y, player.GetPosition().Z, 10)
 		veh := vehicle.CreateVehicleByHash(vehicle_hash.T20, "test", pos, player.GetRotation(), 1, 1)
 		player.SetIntoVehicle(veh, 1)
 		timers.SetTimeout(time.Second*3, func() {
@@ -63,7 +63,7 @@ func BaseBenchmark(player *models.IPlayer, t int64, count int64) {
 				}
 				veh.Repair()
 				veh.SetWheelColor(uint8(rand.Intn(10)))
-				veh.SetNeonColor(utils.NewRGBA(uint8(rand.Intn(255)), uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255))
+				veh.SetNeonColor(common.NewRGBA(uint8(rand.Intn(255)), uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255))
 				veh.SetLightState(vehicle_light_state_type.VehicleLightAlwaysOn)
 				veh.SetDirtLevel(uint8(rand.Intn(6)))
 				veh.SetRadioStation(radio_station_type.LosSantosRockRadio)
@@ -134,7 +134,7 @@ func GetAdmin(player *models.IPlayer, password string) {
 }
 
 func SetPos(player *models.IPlayer, posStr string) {
-	pos, err := utils.NewVector3FromStr(posStr)
+	pos, err := common.NewVector3FromStr(posStr)
 	if err != nil {
 		player.SendBroadcastMessage("Set position error, position incorrect format")
 		return
