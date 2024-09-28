@@ -2,10 +2,10 @@ package commands
 
 import (
 	"fmt"
-	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
 	"github.com/StanZzzz222/RAltGo/common/command"
+	"github.com/StanZzzz222/RAltGo/common/core/alt/alt_vehicle"
 	"github.com/StanZzzz222/RAltGo/common/models"
-	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_hash"
+	"github.com/StanZzzz222/RAltGo/hash_enums"
 	"github.com/StanZzzz222/RAltGo/logger"
 )
 
@@ -38,9 +38,9 @@ func CreateVehicle(player *models.IPlayer, name string) {
 		veh := player.GetData("veh").(*models.IVehicle)
 		veh.Destroy()
 	}
-	veh := vehicle.CreateVehicle(name, "test", player.GetPosition(), player.GetRotation(), 1, 1)
+	veh := alt_vehicle.CreateVehicle(name, "test", player.GetPosition(), player.GetRotation(), 1, 1)
 	player.SetData("veh", veh)
-	player.SetIntoVehicle(veh, uint8(vehicle_hash.Driver))
+	player.SetIntoVehicle(veh, uint8(hash_enums.DriverSeat))
 	player.SendBroadcastMessage(fmt.Sprintf("Create vehicle: %v | id: %v", veh.GetModel().String(), veh.GetId()))
 }
 

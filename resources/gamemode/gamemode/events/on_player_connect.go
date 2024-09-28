@@ -2,7 +2,7 @@ package events
 
 import (
 	"github.com/StanZzzz222/RAltGo/common"
-	"github.com/StanZzzz222/RAltGo/common/alt/timers"
+	"github.com/StanZzzz222/RAltGo/common/core/alt/alt_timers"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/hash_enums/ped_hash"
 	"github.com/StanZzzz222/RAltGo/logger"
@@ -19,7 +19,7 @@ func OnPlayerConnect(player *models.IPlayer) {
 	logger.LogInfof("Player %v(%v) connected, IP: %v", player.GetName(), player.GetId(), player.GetIP())
 	player.SendBroadcastMessage("Welcome to server")
 	player.Spawn(ped_hash.FreemodeMale01, common.NewVector3(-1069.3187, -2928.9758, 14.1318))
-	timers.SetTimeout(time.Second*3, func() {
+	alt_timers.SetTimeout(time.Second*3, func() {
 		player.SetPedModel(ped_hash.AnitaCutscene)
 		player.SetSyncedMetaData("test", "Hello JS")
 		player.SetSyncedMetaData("bool", true)

@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/StanZzzz222/RAltGo/common"
-	"github.com/StanZzzz222/RAltGo/common/alt/timers"
-	"github.com/StanZzzz222/RAltGo/common/alt/vehicle"
 	"github.com/StanZzzz222/RAltGo/common/command"
+	"github.com/StanZzzz222/RAltGo/common/core/alt/alt_timers"
+	"github.com/StanZzzz222/RAltGo/common/core/alt/alt_vehicle"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/hash_enums/radio_station_type"
 	"github.com/StanZzzz222/RAltGo/hash_enums/vehicle_hash"
@@ -43,9 +43,9 @@ func BaseBenchmark(player *models.IPlayer, t int64, count int64) {
 		// Mock real usage environment
 		// Intel Core i913900H - count: 10000 - Since: 135 ms | Game - Since: 800 ms
 		pos := common.NewVector3ARound(player.GetPosition().X, player.GetPosition().Y, player.GetPosition().Z, 10)
-		veh := vehicle.CreateVehicleByHash(vehicle_hash.T20, "test", pos, player.GetRotation(), 1, 1)
+		veh := alt_vehicle.CreateVehicleByHash(vehicle_hash.T20, "test", pos, player.GetRotation(), 1, 1)
 		player.SetIntoVehicle(veh, 1)
-		timers.SetTimeout(time.Second*3, func() {
+		alt_timers.SetTimeout(time.Second*3, func() {
 			start := time.Now()
 			for i := 0; i < int(count); i++ {
 				veh.SetPrimaryColor(uint8(rand.Intn(159)))
