@@ -2,7 +2,7 @@ package client_events
 
 import (
 	"fmt"
-	"github.com/StanZzzz222/RAltGo/common/core/alt_events"
+	"github.com/StanZzzz222/RAltGo/common/core/alt/alt_events"
 	"github.com/StanZzzz222/RAltGo/common/models"
 	"github.com/StanZzzz222/RAltGo/logger"
 )

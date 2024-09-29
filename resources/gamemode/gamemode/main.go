@@ -4,7 +4,7 @@ import (
 	"gamemode/client_events"
 	"gamemode/commands"
 	"gamemode/events"
-	"github.com/StanZzzz222/RAltGo/common/core/alt_events"
+	"github.com/StanZzzz222/RAltGo/common/core/alt/alt_events"
 	"github.com/StanZzzz222/RAltGo/modules"
 )
 
