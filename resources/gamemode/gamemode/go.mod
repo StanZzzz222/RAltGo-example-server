@@ -2,9 +2,10 @@ module gamemode
 
 go 1.22
 
-require github.com/StanZzzz222/RAltGo v0.0.0-20240929194749-b12fa00c22be
+require github.com/StanZzzz222/RAltGo v0.0.0-20240930111842-4f0925733454
 
 require (
+	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/gammazero/deque v0.2.1 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/gookit/color v1.5.4 // indirect
