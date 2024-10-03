@@ -2,7 +2,7 @@ module gamemode
 
 go 1.22
 
-require github.com/StanZzzz222/RAltGo v0.0.0-20241003163731-c15dfed36bff
+require github.com/StanZzzz222/RAltGo v0.0.0-20241003164339-e2619869f7d9
 
 require (
 	github.com/gammazero/deque v0.2.1 // indirect
