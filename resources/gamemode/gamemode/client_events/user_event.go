@@ -18,6 +18,6 @@ func InitUserEvents() {
 }
 
 func HelloEvent(player *models.IPlayer, name string, age int64) {
-	logger.LogInfof("Trigger HelloEvent Hello %v, age is %v", name, age)
+	logger.Logger().LogInfof("Trigger HelloEvent Hello %v, age is %v", name, age)
 	player.SendBroadcastMessage(fmt.Sprintf("Hello %v, age is %v", name, age))
 }

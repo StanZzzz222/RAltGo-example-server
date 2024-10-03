@@ -20,7 +20,7 @@ func InitAdminCommands() {
 	// Do logic processing in middleware?
 	group.UseMiddleware(func(player *models.IPlayer, name string, args []any) bool {
 		if player.HasData("admin") {
-			logger.LogInfof("Player: %v use command: %v", player.GetName(), name)
+			logger.Logger().LogInfof("Player: %v use command: %v", player.GetName(), name)
 			return true
 		}
 		player.SendBroadcastMessage("You do not have permission to use this command")

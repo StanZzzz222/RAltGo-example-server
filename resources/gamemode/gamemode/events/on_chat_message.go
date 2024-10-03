@@ -12,5 +12,5 @@ import (
 */
 
 func OnChatMessage(player *models.IPlayer, message string) {
-	logger.LogInfof("Player: %v say %v", player.GetName(), message)
+	logger.Logger().LogInfof("Player: %v say %v", player.GetName(), message)
 }

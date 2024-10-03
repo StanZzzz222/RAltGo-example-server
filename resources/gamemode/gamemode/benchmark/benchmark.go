@@ -31,21 +31,21 @@ func Benchmark() {
 	for i := 0; i < 50000; i++ {
 		_ = alt_vehicle.CreateVehicleByHash(vehicle_hash.T20, fmt.Sprintf("test%v", i), common.NewVector3(-1069.3187, -2928.9758, 14.1318), common.NewVector3(0, 0, 0), 1, 1)
 	}
-	logger.LogInfof("Create 50,000 vehicles Since: %v ms", time.Since(start).Milliseconds()) // Since: 617 ms
+	logger.Logger().LogInfof("Create 50,000 vehicles Since: %v ms", time.Since(start).Milliseconds()) // Since: 617 ms
 	start = time.Now()
 	for i := 0; i < 10000; i++ {
 		_ = alt_blip.CreateBlipPoint(true, 12, 1, fmt.Sprintf("test%v", i), common.NewVector3(-1069.3187, -2928.9758, 14.1318))
 		_ = alt_blip.CreateBlipRadius(true, 1, fmt.Sprintf("test%v", i), common.NewVector3(-1069.3187, -2928.9758, 14.1318), 15, false)
 		_ = alt_blip.CreateBlipArea(true, 1, fmt.Sprintf("test%v", i), common.NewVector3(-1069.3187, -2928.9758, 14.1318), 15, 15)
 	}
-	logger.LogInfof("Create 10,000 blips Since: %v ms", time.Since(start).Milliseconds()) // Since: 382 ms
+	logger.Logger().LogInfof("Create 10,000 blips Since: %v ms", time.Since(start).Milliseconds()) // Since: 382 ms
 	start = time.Now()
 	for i := 0; i < 50000; i++ {
 		_ = alt_ped.CreatePedByHash(ped_hash.Agent, common.NewVector3(-1069.3187, -2928.9758, 14), common.NewVector3(0, 0, 0))
 		_ = alt_ped.CreatePedByHash(ped_hash.Ammucity01SMY, common.NewVector3(-1089.3187, -2928.9758, 14), common.NewVector3(0, 0, 0))
 		_ = alt_ped.CreatePedByHash(ped_hash.AcidLabCookIG, common.NewVector3(-1039.3187, -2928.9758, 14), common.NewVector3(0, 0, 0))
 	}
-	logger.LogInfof("Create 50,000 peds Since: %v ms", time.Since(start).Milliseconds()) // Since: 337 ms
+	logger.Logger().LogInfof("Create 50,000 peds Since: %v ms", time.Since(start).Milliseconds()) // Since: 337 ms
 	start = time.Now()
 	for i := 0; i < 100000; i++ {
 		_ = ped1.GetPosition()
@@ -53,5 +53,5 @@ func Benchmark() {
 		ped1.SetMaxHealth(hash_enums.MaxHealth)
 		ped1.SetPosition(common.NewVector3(-1039.3187, -2928.9758, 14))
 	}
-	logger.LogInfof("Get position/rotation and set 100,000 peds Since: %v ms", time.Since(start).Milliseconds()) // Since: 781 ms
+	logger.Logger().LogInfof("Get position/rotation and set 100,000 peds Since: %v ms", time.Since(start).Milliseconds()) // Since: 781 ms
 }

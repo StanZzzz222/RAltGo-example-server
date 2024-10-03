@@ -11,5 +11,5 @@ import (
 */
 
 func OnStart() {
-	logger.LogInfo("Server Start")
+	logger.Logger().LogInfo("Server Start")
 }

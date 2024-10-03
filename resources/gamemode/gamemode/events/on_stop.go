@@ -9,5 +9,5 @@ import "github.com/StanZzzz222/RAltGo/logger"
 */
 
 func OnStop() {
-	logger.LogInfo("Server Stop")
+	logger.Logger().LogInfo("Server Stop")
 }
